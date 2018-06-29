@@ -6,7 +6,8 @@ def QR_Fact(matrix):
   if len(matrix)==0:
     print ("Error")  
     return None
-  for i in range(len(matrix):
+  x=0
+  for i in range(len(matrix)):
     if type(matrix) != list:
       print ("Error")
       return None
@@ -23,3 +24,7 @@ def QR_Fact(matrix):
       if type(matrix[i][j]) !=complex:
         print("Error")
         return None
+      x+=vector[i]**2
+      Norm=x**(1/2)
+      Q_hat=matrix[i]/Norm
+    return (Q_hat)
