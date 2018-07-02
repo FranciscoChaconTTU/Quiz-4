@@ -13,6 +13,17 @@ def twoNorm(vector):
       x = x + (vector[i]**2)
     x = x**(1/2)
     return x
+def normalize(vector):
+  "This function takes the max of a vector. This is similar to question 4. The only difference is that this fuction calls function 4 and divides every element in the vector by its max. We use the infNorm to calculate the max value. This fuction returns a vector"
+  #This line is used to called the infNorm that we used before
+  x=twoNorm(vector)
+  y=[]
+  #This line takes the dimension of the vector
+  for i in range(len(vector)):
+    #This line takes the division of each element by the max magnitude and stores it to the blank list
+    y.append(vector[i]/x)
+    #This line returns a vector with the division
+  return y
 def scalarVecMulti(scalar,vector):
   "This fuction takes in a scalar and multiplies it with a vector. First in takes the lenght of the vector and multiplies the first element of the vector to the scalar and it stores it to the blank list. Then it does this for all elements and returns a vector."
  # This variable will keep track of the validity of our input.
@@ -23,10 +34,11 @@ def scalarVecMulti(scalar,vector):
       inputStatus = False
       print("Invalid Input")
     # If the input is valid the function continues
-    if inputStatus == True:
-      x=[]
+  if inputStatus == True:
+    x=[]
+    for i in range(len(vector)):
     #This lines takes the elements of the vector and multiplies if by the scalar respectively and stores it into a blank list.
-    x.append(scalar*vector[i])
+      x.append(scalar*vector[i])
     #This line returns the vector
   return x 
 def dot(vector01,vector02):
@@ -52,55 +64,54 @@ def dot(vector01,vector02):
     return None
 def vecSubtract(vector03,vector04):
   "This fuction takes in two vector of the same dimension and subtracts them. First in checks if the dimension are the same, if they aren't it prints invalid input. If they are the same dimension it takes the first element of the first vector and the first element of the second vector and stores it on a blank matrix. It keeps doing this for all elements in the vector"
-  for i in range(len(vector03)):  
-    if ((type(vector03[i]) != int) and (type(vector03[i]) != float) and (type(vector03[i]) != complex)):
-      inputStatus = False
-      print("Invalid Input")
+  inputStatus = True 
+  if len(vector03)==len(vector04):
+    for i in range(len(vector03)):  
+      if ((type(vector03[i]) != int) and (type(vector03[i]) != float) and (type(vector03[i]) != complex)):
+        inputStatus = False
+        print("Invalid Input")
+  else:
+    inputStatus=False
+    print("Invalid Input")
   # If the input is valid the function continues to compute the 2-norm
-  if inputStatus == True and len(vector03)==len(vector04):
+  if inputStatus == True:
     x = []
     #This line is taking the elements of vector one and subtracting vector two elements respectively 
     for i in range(len(vector03)):
       #This line takes in the subtraction and stores them to the blank matrix to retunr a vector
-        x.append(vector03[i]-vector04[i])    
+      print(vector04[i])
+      x.append(vector03[i]-vector04[i])    
     return x
     #This line is to print invalid input if the dimensions aren't the same
   else:
     print("invalid input")
     return None
-def QR_Fact(matrix):
-  r_ii = twoNorm(matrix)
-  y=[0]*len(matrix)
-  if type(matrix) != list:
-    print ("Error")
+def GS(A):
+  if type(A) != list and len(A)==0:
+    print ("Error1")
     return None
-  if len(matrix)==0:
-    print ("Error")  
-    return None
-  for i in range(len(matrix)):
-    if type(matrix) != list:
-      print ("Error")
+  for i in range(len(A)):
+    if type(A[i]) != list and len(A[i])==0:
+      print ("Error2")
       return None
-    if len(matrix)==0:
-      print ("Error")  
-      return None
-    for j in range(len(matrix[i])):
-      if type(matrix[i][j]) !=int:
-        print("Error")
+    for j in range(len(A[i])):
+      if type(A[i][j]) !=int and type(A[i][j]) !=float and type(A[i][j]) !=complex:
+        print("Error3")
         return None
-      if type(matrix[i][j]) !=float:
-        print("Error")
-        return None
-      if type(matrix[i][j]) !=complex:
-        print("Error")
-        return None
-      else: 
-        q_i=(matrix[i][j]/r_ii)
-        y[i] += q_i
-        return (y)
-    r_ij=matrix[j][i] * matrix [j]
-    v_j= matrix[j] - (r_ij*q_i)
+  n=len(A)
+  m=len(A[0])
+  V=A
+  R=[[0]*n for i in range(n)]
+  Q=[[0]*m for i in range(n)]
+  for i in range(n):
+    R[i][i]=twoNorm(V[i])
+    Q[i]=normalize(V[i])
+    for j in range(i+1,n):
+      R[j][i]=dot(Q[i],V[j])
+      temp= scalarVecMulti(R[i][j],Q[i]) 
+      print(temp)
+      V[j]=vecSubtract(V[j],temp)
+    return (Q,R)
 
-matrix = [[1,0,2],[2,1,0]]
-print (QR_Fact(matrix))
-  
+A=[[1,0,1],[2,1,0]]
+print(GS(A))
