@@ -1,8 +1,5 @@
-
 def twoNorm(vector):
-  '''
-  twoNorm takes a vector as it's argument. It then computes the sum of  the squares of each element of the vector. It then returns the square root of this sum.
-  '''
+  "twoNorm takes a vector as it's argument. It then computes the sum of  the squares of each element of the vector. It then returns the square root of this sum."
   # This variable will keep track of the validity of our input.
   inputStatus = True  
   # This for loop will check each element of the vector to see if it's a number. 
@@ -10,34 +7,39 @@ def twoNorm(vector):
     if ((type(vector[i]) != int) and (type(vector[i]) != float) and (type(vector[i]) != complex)):
       inputStatus = False
       print("Invalid Input")
-  # If the input is valid the function continues to compute the 2-norm
-  if inputStatus == True:
-    x = 0
-# This for loop will compute the sum of the squares of the elements of the vector. 
-    for i in range(len(vector)):
+    # If the input is valid the function continues to compute the 2-norm
+    if inputStatus == True:
+      x = 0
       x = x + (vector[i]**2)
     x = x**(1/2)
     return x
 def scalarVecMulti(scalar,vector):
   "This fuction takes in a scalar and multiplies it with a vector. First in takes the lenght of the vector and multiplies the first element of the vector to the scalar and it stores it to the blank list. Then it does this for all elements and returns a vector."
-  x=[]
-  #This line checks the dimensions of the vector 
-  for i in range(len(vector)):
+ # This variable will keep track of the validity of our input.
+  inputStatus = True  
+  # This for loop will check each element of the vector to see if it's a number. 
+  for i in range(len(vector)):  
+    if ((type(vector[i]) != int) and (type(vector[i]) != float) and (type(vector[i]) != complex)):
+      inputStatus = False
+      print("Invalid Input")
+    # If the input is valid the function continues
+    if inputStatus == True:
+      x=[]
     #This lines takes the elements of the vector and multiplies if by the scalar respectively and stores it into a blank list.
     x.append(scalar*vector[i])
     #This line returns the vector
   return x 
 def dot(vector01,vector02):
   "This fuction takes in two vectors and first checks if they are lists. Then it checks if they are of the same dimensions. Then if they are of the same dimensions it multiplies the elements in the same positions and adds them at the end. If they are not of the same dimensions it return invalid input."
-  #These lines are to check to see if its not a list
-  if type(vector01) != list or type(vector02) != list:
-    print ("invalid input")
-    return False
-  if len(vector01)==0 or len(vector02)==0:
-    print ("invalid input")  
-    return False
-  #This line is to check if the dimensions of my vectors are the same
-  if len(vector01)==len(vector02):
+   # This variable will keep track of the validity of our input.
+  inputStatus = True  
+  # This for loop will check each element of the vector to see if it's a number. 
+  for i in range(len(vector01)): 
+    if ((type(vector01[i])!=int) and (type(vector01[i])!=float) and (type(vector01[i]) !=complex) and len(vector01)==0 or len(vector02)==0):
+      inputStatus = False
+      print("Invalid Input")
+  # If the input is valid the function continues
+  if inputStatus == True and len(vector01)==len(vector02):
     x = 0
     #If the dimensions are the same go ahead and do the multiplication of each element
     for i in range(len(vector01)):
@@ -50,8 +52,12 @@ def dot(vector01,vector02):
     return None
 def vecSubtract(vector03,vector04):
   "This fuction takes in two vector of the same dimension and subtracts them. First in checks if the dimension are the same, if they aren't it prints invalid input. If they are the same dimension it takes the first element of the first vector and the first element of the second vector and stores it on a blank matrix. It keeps doing this for all elements in the vector"
-  #This line is checking the dimensions of the two vectors
-  if len(vector03)==len(vector04):
+  for i in range(len(vector03)):  
+    if ((type(vector03[i]) != int) and (type(vector03[i]) != float) and (type(vector03[i]) != complex)):
+      inputStatus = False
+      print("Invalid Input")
+  # If the input is valid the function continues to compute the 2-norm
+  if inputStatus == True and len(vector03)==len(vector04):
     x = []
     #This line is taking the elements of vector one and subtracting vector two elements respectively 
     for i in range(len(vector03)):
@@ -63,9 +69,8 @@ def vecSubtract(vector03,vector04):
     print("invalid input")
     return None
 def QR_Fact(matrix):
-  A=[0]*len(matrix)
-  Q=[0]*len(matrix)
-  R=[0]
+  r_ii = twoNorm(matrix)
+  y=[0]*len(matrix)
   if type(matrix) != list:
     print ("Error")
     return None
@@ -89,6 +94,13 @@ def QR_Fact(matrix):
       if type(matrix[i][j]) !=complex:
         print("Error")
         return None
+      else: 
+        q_i=(matrix[i][j]/r_ii)
+        y[i] += q_i
+        return (y)
+    r_ij=matrix[j][i] * matrix [j]
+    v_j= matrix[j] - (r_ij*q_i)
+
+matrix = [[1,0,2],[2,1,0]]
+print (QR_Fact(matrix))
   
-
-
