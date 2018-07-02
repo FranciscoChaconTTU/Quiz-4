@@ -108,7 +108,7 @@ def GS(A):
     Q[i]=normalize(V[i])
     for j in range(i+1,n):
       R[j][i]=dot(Q[i],V[j])
-      temp= scalarVecMulti(R[i][j],Q[i]) 
+      temp= scalarVecMulti(R[j][i],Q[i]) 
       print(temp)
       V[j]=vecSubtract(V[j],temp)
     return (Q,R)
