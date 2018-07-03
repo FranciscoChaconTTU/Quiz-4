@@ -95,6 +95,7 @@ def vecSubtract(vector03,vector04):
           x.append(vector03[i]-vector04[i])    
       return x
 def GS(A):
+  "This fuction is to take the Modified Gram-Schmidt of a Matrix. This takes the QR Factorization of the matrix. We use all of the fuction that we used for previous quizzes. This is to help us take the Norm of the vectors. We use the two norm to normalize the vector. Then we take the dot product of the normalized vector and the second vector. Then scalar vector multiplication of the dot product and the normalized vector and gave the variable a name. Then we subtract the second vector minus the variable that we assigned a name too. We get our factorization "
   # This for loop will check each element of the vector to see if it's a number. 
   if type(A) != list and len(A)==0:
     print ("Error1")
